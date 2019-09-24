@@ -1,0 +1,101 @@
+---
+title: "diffbind"
+author: "Robert Andrews"
+date: "14/11/2018"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+Install the package (if this doesn't work, you need to download a newer version of R)
+
+```{r}
+
+#if (!requireNamespace("BiocManager", quietly = TRUE)) {
+#    install.packages("BiocManager")
+#}
+
+#BiocManager::install("DiffBind", version = "3.8")
+
+```
+
+Set working directory
+
+```{r}
+
+setwd("C:/Users/Sam/Desktop/Dissertation/an0206/bin")
+
+```
+
+Load the libraries
+
+```{r}
+
+library("DiffBind")
+library("dplyr")
+
+```
+
+Read-in targets file
+
+```{r}
+
+targets <- read.table("../resources/targets.txt", sep="\t", header=T, quote="")
+targets$bamReads <- paste("../input/", targets$bamReads, sep="")
+targets$Peaks <- paste("../input/", targets$Peaks, sep="")
+  
+```
+
+Create the required bed files from the MACS2 output
+
+```{r}
+
+for (macsFile in targets$Peaks) {
+
+  bedFile <- gsub(".xls$", ".bed", macsFile)
+    
+  macsData <- read.table(macsFile, sep="\t", blank.lines.skip=T, comment.char="#", header=T)
+  write.table(dplyr::select(macsData, chr, start, end, name), bedFile, sep="\t", row.names=F, col.names=F, quote=F) 
+}
+
+targets$Peaks <- gsub(".xls$", ".bed", targets$Peaks)
+
+
+```
+
+Read-in sample data
+
+```{r}
+
+sampleData <- dba(sampleSheet=targets)
+
+```
+
+Count the reads (from bam) under each peak (bed)
+
+```{r}
+
+countData <- dba.count(sampleData)
+fripCountData <- dba.count(sampleData, summits=250)
+
+```
+
+Generate the contrasts for the differential analysis
+
+```{r}
+
+contrastData <- dba.contrast(countData, categories=DBA_CONDITION, minMembers=3)
+
+```
+
+Perform the differential calculation and export the results
+
+```{r}
+
+deResults <- dba.analyze(contrastData)
+deOutput <- dba.report(deResults)
+write.table(deOutput, file="../output/ko_vs_wt.peakDE.txt", sep="\t", row.names=F)
+
+```
+
+
