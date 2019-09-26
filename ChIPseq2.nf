@@ -264,12 +264,12 @@ process macs2Peak {
     module purge
     module load macs2/2.1.2
 
-    macs2 callpeak -t ${ktreat} -c ${kcontrol} -f AUTO -g ${organism_id} -n ko.q0.01.macs2 -B -q 0.01 --nomodel --shift -100 --extsize 200
-    macs2 callpeak -t ${ktreat} -c ${kcontrol} -f AUTO -g ${organism_id} -n ko.q0.05.macs2 -B -q 0.05 --nomodel --shift -100 --extsize 200
-    macs2 callpeak -t ${ktreat} -c ${kcontrol} -f AUTO -g ${organism_id} -n ko.q0.1.macs2 -B -q 0.1 --nomodel --shift -100 --extsize 200
+    macs2 callpeak -t ${ktreat} -c ${kcontrol} -f AUTO -g ${organism_id} -n ko.q0.01.macs2 -B -q 0.01 --shift -100 --extsize 200
+    macs2 callpeak -t ${ktreat} -c ${kcontrol} -f AUTO -g ${organism_id} -n ko.q0.05.macs2 -B -q 0.05 --shift -100 --extsize 200
+    macs2 callpeak -t ${ktreat} -c ${kcontrol} -f AUTO -g ${organism_id} -n ko.q0.1.macs2 -B -q 0.1 --shift -100 --extsize 200
     
-    macs2 callpeak -t ${wtreat} -c ${wcontrol} -f AUTO -g ${organism_id} -n wt.q0.01.macs2 -B -q 0.01 --nomodel --shift -100 --extsize 200
-    macs2 callpeak -t ${wtreat} -c ${wcontrol} -f AUTO -g ${organism_id} -n wt.q0.05.macs2 -B -q 0.05 --nomodel --shift -100 --extsize 200
-    macs2 callpeak -t ${wtreat} -c ${wcontrol} -f AUTO -g ${organism_id} -n wt.q0.1.macs2 -B -q 0.1 --nomodel --shift -100 --extsize 200
+    macs2 callpeak -t ${wtreat} -c ${wcontrol} -f AUTO -g ${organism_id} -n wt.q0.01.macs2 -B -q 0.01 --shift -100 --extsize 200
+    macs2 callpeak -t ${wtreat} -c ${wcontrol} -f AUTO -g ${organism_id} -n wt.q0.05.macs2 -B -q 0.05 --shift -100 --extsize 200
+    macs2 callpeak -t ${wtreat} -c ${wcontrol} -f AUTO -g ${organism_id} -n wt.q0.1.macs2 -B -q 0.1 --shift -100 --extsize 200
     """
 }
